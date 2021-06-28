@@ -13,7 +13,7 @@ if(isset($_POST['Email']) and isset($_POST['Password'])){
 $users = file_get_contents("users.json");
 $users = json_decode($users, true);
 
-// Checking for the entered mail in the user base
+// Checking for the entered mail in the user database
 $email_check = false;
 foreach ($users as $user) {
     if($user["email"]==$email) $email_check = true;
