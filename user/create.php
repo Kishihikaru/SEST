@@ -1,27 +1,27 @@
 <?php
 session_start();
 
-// Проверяем установлены ли поля почты и пароля
-// Если да - переходим на следующий этап регистрации
-// Если нет - выводим сообщение об отсутствии данных
+// Check if the email and password fields are set
+// If yes - go to the next stage of registration
+// If not, displaying a message about the data absence
 if(isset($_POST['Email']) and isset($_POST['Password'])){
-  // Поместим данные полей ввода в отдельные переменные для простоты использования
+  // Put the data of the input fields in separate variables for ease of use
   $email = $_POST['Email'];
   $password = $_POST['Password'];
 
-// Считываем файл с юзерами и декодируем данные в массив
+// Reading the file with users and decode data into an array
 $users = file_get_contents("users.json");
 $users = json_decode($users, true);
 
-// Проверка на наличие введённой почты в базе юзеров
+// Checking for the entered mail in the user base
 $email_check = false;
 foreach ($users as $user) {
     if($user["email"]==$email) $email_check = true;
 }
 
-// Если в базе нет юзера с такой почтой
-// Проводи регистрацию
-// Иначе: выводим сообщение о существовании пользователя с такой почтой
+// If there is no user with such email in the database
+// Register a user
+// Otherwise: displaying a message about the existence of a user with such email
 if($email_check == false){
   $new_user = ["password" => password_hash($password, PASSWORD_BCRYPT) ,"email" => $email];
   array_push($users, $new_user);

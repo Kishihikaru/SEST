@@ -2,22 +2,22 @@
 session_start();
 $_SESSION['auth'] = false;
 
-// Проверяем установлены ли поля почты и пароля
-// Если да - переходим на следующий этап аутентификации
-// Если нет - выводим сообщение об отсутствии данных
+// Check if the email and password fields are set
+// If yes - go to the next stage of authentication
+// If not, displaying a message about the data absence
 if(isset($_POST['Email']) and isset($_POST['Password'])){
 
-  // Поместим данные полей ввода в отдельные переменные для простоты использования
+  // Put the data of the input fields in separate variables for ease of use
   $email = $_POST['Email'];
   $password = $_POST['Password'];
 
-  // Считываем файл с юзерами и декодируем данные в массив
+  // Reading the file with users and decode data into an array
   $users = file_get_contents("users.json");
   $users = json_decode($users, true);
 
-  // Перебираем массив юзеров
-  // В случае правильных данных аутентификации: выводим сообщение об удачной аутентификации
-  // в иных случаях выводим сообщение об неправильности данных
+  // Iterate over the array of users
+  // In case of correct authentication data: display a message about successful authentication
+  // in other cases, displaying a message about data incorrectness
   foreach ($users as $user) {
       if($user["email"]==$email) {
         $pv = password_verify($password, $user["password"]);

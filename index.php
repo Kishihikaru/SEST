@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Проверка аутентификации
+// Authentication check
 if(isset($_SESSION['auth'])){
   if($_SESSION['auth'] == true){
     echo "Authorization complete as ".$_SESSION['email'];
